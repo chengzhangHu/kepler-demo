@@ -1,4 +1,4 @@
-// Copyright (c) 2018 Uber Technologies, Inc.
+// Copyright (c) 2022 Uber Technologies, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -31,13 +31,21 @@ const CONFIG = {
   entry: {
     app: resolve('./src/main.js')
   },
+  output: {
+    path: resolve(__dirname, 'build'),
+    filename: 'bundle.js',
+    publicPath: '/'
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.json']
+  },
 
   devtool: 'source-map',
 
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|ts|tsx)$/,
         loader: 'babel-loader',
         include: join(__dirname, 'src'),
         exclude: [/node_modules/]
@@ -56,10 +64,10 @@ const CONFIG = {
   },
 
   // Optional: Enables reading mapbox token from environment variable
-  plugins: [
-    new webpack.EnvironmentPlugin(['MapboxAccessToken'])
-  ]
+  plugins: [new webpack.EnvironmentPlugin(['MapboxAccessToken'])]
 };
 
 // This line enables bundling against src in this repo rather than installed deck.gl module
-module.exports = CONFIG;
+module.exports = env => {
+  return env ? require('../webpack.config.local')(CONFIG, __dirname)(env) : CONFIG;
+};

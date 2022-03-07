@@ -1,4 +1,4 @@
-// Copyright (c) 2018 Uber Technologies, Inc.
+// Copyright (c) 2022 Uber Technologies, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,28 +18,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {createStore, applyMiddleware, compose} from 'redux';
+import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
+import keplerGlReducer from 'kepler.gl/reducers';
+import {enhanceReduxMiddleware} from 'kepler.gl/middleware';
+import appReducer from './app-reducer';
 
-import window from 'global/window';
-import {taskMiddleware} from 'react-palm/tasks';
-import {routerMiddleware} from 'react-router-redux';
-import {hashHistory} from 'react-router';
-import reducers from './reducers';
+const reducers = combineReducers({
+  keplerGl: keplerGlReducer,
+  app: appReducer
+});
 
-export const middlewares = [
-  taskMiddleware,
-  routerMiddleware(hashHistory)
-];
+const middlewares = enhanceReduxMiddleware([]);
+const enhancers = [applyMiddleware(...middlewares)];
 
-export const enhancers = [applyMiddleware(...middlewares)];
-
-const initialState = {};
-
-// add redux devtools
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-export default createStore(
-  reducers,
-  initialState,
-  composeEnhancers(...enhancers)
-);
+export default createStore(reducers, {}, compose(...enhancers));

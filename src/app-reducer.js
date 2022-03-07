@@ -1,6 +1,4 @@
-import keplerGlReducer from 'kepler.gl/reducers';
-import { routerReducer } from 'react-router-redux';
-// Copyright (c) 2018 Uber Technologies, Inc.
+// Copyright (c) 2022 Uber Technologies, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,22 +18,29 @@ import { routerReducer } from 'react-router-redux';
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import { combineReducers } from 'redux';
-import { handleActions } from 'redux-actions';
+import {createAction, handleActions} from 'redux-actions';
 
-// INITIAL_APP_STATE
-const initialAppState = {
+// CONSTANTS
+export const INIT = 'INIT';
+
+// ACTIONS
+export const appInit = createAction(INIT);
+
+// INITIAL_STATE
+const initialState = {
   appName: 'example',
   loaded: false
 };
 
-const reducers = combineReducers({
-   // mount keplerGl reducer
-  keplerGl: keplerGlReducer,
-  app: handleActions({
-    // you can put your app reducer here
-  }, initialAppState),
-  routing: routerReducer
-});
+// REDUCER
+const appReducer = handleActions(
+  {
+    [INIT]: (state, action) => ({
+      ...state,
+      loaded: true
+    })
+  },
+  initialState
+);
 
-export default reducers;
+export default appReducer;

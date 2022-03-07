@@ -1,23 +1,29 @@
-# Demo App
+# Node/Express
 
-This is the src code of kepler.gl demo app.
+This example shows how to embed Kepler.gl in a node/express/webpack application. 
 
+#### 1. Install
 
-### Local dev
-```
+```sh
 npm install
 ```
+
 or
-```
-yarn --ignore-engines
+
+```sh
+yarn
 ```
 
+
+#### 2. Mapbox Token
 add mapbox access token to node env
-```
+
+```sh
 export MapboxAccessToken=<your_mapbox_token>
 ```
 
-then
-```
+#### 3. Start the app
+
+```sh
 npm start
 ```

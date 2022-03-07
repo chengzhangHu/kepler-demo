@@ -1,4 +1,4 @@
-// Copyright (c) 2018 Uber Technologies, Inc.
+// Copyright (c) 2022 Uber Technologies, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,19 +21,13 @@
 import React from 'react';
 import document from 'global/document';
 import {Provider} from 'react-redux';
-import {hashHistory, Router, Route} from 'react-router';
-import {syncHistoryWithStore} from 'react-router-redux';
 import {render} from 'react-dom';
 import store from './store';
 import App from './app';
 
-const history = syncHistoryWithStore(hashHistory, store);
-
 const Root = () => (
   <Provider store={store}>
-    <Router history={history}>
-      <Route path="/" component={App} />
-    </Router>
+    <App />
   </Provider>
 );
 
