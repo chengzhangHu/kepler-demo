@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node server.js",
+    "start": "node --max-old-space-size=2048 server.js",
     "start-local": "WEBPACK_ENV=es6 node server.js"
   },
   "dependencies": {
