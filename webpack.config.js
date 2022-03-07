@@ -28,6 +28,7 @@ const webpack = require('webpack');
 
 const CONFIG = {
   // bundle app.js and everything it imports, recursively.
+  mode: 'production',
   entry: {
     app: resolve('./src/main.js')
   },
