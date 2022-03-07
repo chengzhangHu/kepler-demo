@@ -29,6 +29,10 @@ const webpack = require('webpack');
 const CONFIG = {
   // bundle app.js and everything it imports, recursively.
   mode: 'production',
+  performance: {
+    maxEntrypointSize: 4000000,
+    maxAssetSize: 1000000
+  },
   entry: {
     app: resolve('./src/main.js')
   },
