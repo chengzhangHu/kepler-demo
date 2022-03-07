@@ -23,10 +23,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 import styled from 'styled-components';
-import { addDataToMap, wrapTo } from 'kepler.gl/actions';
-// import matsData from '../mats/kepler.gl_all';
-import { processCsvData } from 'kepler.gl/processors';
-import sampleIconCsv from './data/nyc-subset.csv';
+import { addDataToMap } from 'kepler.gl/actions';
+import matsData from '../mats/kepler.gl_all';
+import { processKeplerglJSON } from 'kepler.gl/processors';
+// import sampleIconCsv from './data/nyc-subset.csv';
+// import sampleData from './data/sample-data';
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2hlb25naHUiLCJhIjoiY2wwYW9iZ3VmMGJmcjNlbWlnOXJsaXFsMSJ9.BK5RbNIbuck0Rqe-71fDBQ'; // eslint-disable-line
 // const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
@@ -44,18 +45,9 @@ class App extends Component {
   };
 
   componentDidMount() { 
+    const data = processKeplerglJSON(matsData)
     this.props.dispatch(
-      addDataToMap({
-        datasets: [
-          {
-            info: {
-              label: 'Icon Data',
-              id: 'test_icon_data'
-            },
-            data: processCsvData(sampleIconCsv)
-          }
-        ]
-      })
+      addDataToMap(data)
     );
   }
 
